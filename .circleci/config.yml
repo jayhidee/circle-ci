@@ -1,20 +1,22 @@
 version: 2.1
 
-workflows:
-  test-env-vars:
-    jobs:
-      - build
 
 jobs:
-  build:
+  save_hello_world_output:
     docker:
-      - image: cimg/base:2021.11
+      - image: cimg/node:17.2.0
         auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+            username: mydockerhub-user
+            password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+  
     steps:
       - checkout
-      - run:
-          name: "echo an env var that is part of our project"
-          command: |
-            echo $owner
+      - run: echo "text to output here" > output.txt
+  
+  # print_output_file:
+
+workflows:
+  build_and_run:
+    jobs:
+      - save_hello_world_output
+
