@@ -2,28 +2,28 @@ version: 2.1
 
 
 jobs:
-  save_hello_world_output:
-    docker:
-      - image: cimg/node:17.2.0
-        auth:
-            username: mydockerhub-user
-            password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
-    steps:
-      - checkout
-      - run: echo "text to output here" > output.txt
-      - store_test_results:
-          path: test-results
+  # save_hello_world_output:
+  #   docker:
+  #     - image: cimg/node:17.2.0
+  #       auth:
+  #           username: mydockerhub-user
+  #           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+  #   steps:
+  #     - checkout
+  #     - run: echo "text to output here" > output.txt
+  #     - store_test_results:
+  #         path: test-results
 
-  deploy-job:
-    docker:
-      - image: cimg/base:stable  
-    steps:
-      # attach the files you persisted in the doing-things-job
-      - attach_workspace:
-          at: . # relative path to our working directory
-      - run:
-          command: |
-            echo "this is a deploy step"
+  # deploy-job:
+  #   docker:
+  #     - image: cimg/base:stable  
+  #   steps:
+  #     # attach the files you persisted in the doing-things-job
+  #     - attach_workspace:
+  #         at: . # relative path to our working directory
+  #     - run:
+  #         command: |
+  #           echo "this is a deploy step"
   
   my_running:
     docker:
