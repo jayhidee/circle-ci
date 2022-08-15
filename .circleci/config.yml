@@ -1,34 +1,28 @@
 version: 2.1
 
-
 jobs:
   save_hello_world_output:
     docker:
-      - image: cimg/base:stable
-        auth:
-            username: mydockerhub-user
-            password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
-  
+      - image: circleci/node:13.8.0
     steps:
-      - checkout
-      - run: echo "text to output here" > output.txt
-      - store_test_results:
-          path: test-results
-  
-  # print_output_file:
-deploy-job:
-  docker:
-    - image: cimg/base:stable
-  steps:
-    # attach the files you persisted in the doing-things-job
-    - attach_workspace:
-      at: . # relative path to our working directory
-    - run:
-      command: |
-        echo "this is a deploy step"
+      - run: echo "hello world" > ~/output.txt
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - output.txt
+
+  print_output_file:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run: cat ~/output.txt
 
 workflows:
-  build_and_run:
+  my_workflow:
     jobs:
       - save_hello_world_output
-
+      - print_output_file:
+          requires:
+            - save_hello_world_output
