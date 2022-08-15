@@ -25,24 +25,23 @@ jobs:
           command: |
             echo "this is a deploy step"
   
-  print_pipeline_id:
+  my_running:
     docker:
       - image: cimg/node:17.2.0
-    description: "A sample code"
-    parameters:
-      to:
-        type: string
-        default: "Hello world"
     steps:
-      - run: echo $CIRCLE_WORKFLOW_ID
+      - print_pipeline_id
+
+
+commands:  
+  print_pipeline_id:
+    steps:
+      - run: echo ${CIRCLE_WORKFLOW_ID}
+
+
 
 workflows:
-  build_and_run:
+  my_workflow:
     jobs:
-      - print_pipeline_id
-      # - save_hello_world_output
-      # - deploy-job:
-      #     requires:
-      #       - save_hello_world_output
+      - my_running
 
 
