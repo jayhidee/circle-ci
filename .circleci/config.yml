@@ -4,7 +4,7 @@ version: 2.1
 jobs:
   save_hello_world_output:
     docker:
-      - image: cimg/node:17.2.0
+      - image: cimg/base:stable
         auth:
             username: mydockerhub-user
             password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
@@ -16,6 +16,16 @@ jobs:
           path: test-results
   
   # print_output_file:
+deploy-job:
+  docker:
+    - image: cimg/base:stable
+  steps:
+    # attach the files you persisted in the doing-things-job
+    - attach_workspace:
+      at: . # relative path to our working directory
+    - run:
+      command: |
+        echo "this is a deploy step"
 
 workflows:
   build_and_run:
