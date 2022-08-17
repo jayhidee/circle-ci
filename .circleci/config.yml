@@ -27,7 +27,7 @@ jobs:
   
   my_running:
     docker:
-      - image: cimg/node:17.2.0
+      - image: circleci/node:13.8.0
     steps:
       # - print_pipeline_id
       - run: exit 1
