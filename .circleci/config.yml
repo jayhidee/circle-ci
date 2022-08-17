@@ -36,6 +36,10 @@ commands:
   print_pipeline_id:
     steps:
       - run: echo ${CIRCLE_WORKFLOW_ID}
+      - run: 
+         name: Failed Test
+         command: echo "Error"
+         when: on_fail
 
 
 
